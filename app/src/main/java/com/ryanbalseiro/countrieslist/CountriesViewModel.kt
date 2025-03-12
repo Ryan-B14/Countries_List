@@ -1,14 +1,12 @@
 package com.ryanbalseiro.countrieslist
 
 import android.util.Log
-import androidx.collection.MutableObjectList
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ryanbalseiro.countrieslist.data.api.CountriesIntent
 import com.ryanbalseiro.countrieslist.data.model.countries.Countries
-import com.ryanbalseiro.countrieslist.data.model.countries.CountriesItem
 import com.ryanbalseiro.countrieslist.data.repository.CountriesRepository
 import kotlinx.coroutines.launch
 

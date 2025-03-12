@@ -1,5 +1,6 @@
 package com.ryanbalseiro.countrieslist
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -13,14 +14,15 @@ import com.ryanbalseiro.countrieslist.ui.theme.CountriesListTheme
 
 class MainActivity : ComponentActivity() {
     private val viewModel = CountriesViewModel()
+    @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             CountriesListTheme {
                 viewModel.handleIntent(CountriesIntent.getCountries(""))
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    ListPage(viewModel, innerPadding)
+                Scaffold(modifier = Modifier.fillMaxSize()) {
+                    ListPage(viewModel)
                 }
             }
         }

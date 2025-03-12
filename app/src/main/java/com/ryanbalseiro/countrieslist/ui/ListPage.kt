@@ -1,12 +1,11 @@
 package com.ryanbalseiro.countrieslist.ui
 
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -14,34 +13,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ryanbalseiro.countrieslist.CountriesViewModel
-import com.ryanbalseiro.countrieslist.data.model.countries.CountriesItem
 
 @Composable
-fun ListPage(viewModel: CountriesViewModel, innerPadding: PaddingValues) {
-    val countriesList = listOf(
-        CountriesItem(
-            name = "United States of America",
-            capital = "Washington D.C.",
-            code = "US",
-            region = "NA",
-            currency = null,
-            demonym = null,
-            flag = null,
-            language = null
-        ),
-        CountriesItem(
-            name = "Canada", capital = "Ottawa", code = "CA", region = "NA", currency = null,
-            demonym = null, flag = null, language = null
-        ),
-        CountriesItem(
-            name = "Uruguay", capital = "Montevideo", code = "UY", region = "SA", currency = null,
-            demonym = null, flag = null, language = null
-        ),
-        CountriesItem(
-            name = "England", capital = "London", code = "Eng", region = "EU", currency = null,
-            demonym = null, flag = null, language = null
-        ),
-    )
+fun ListPage(viewModel: CountriesViewModel) {
     val countriesList2 = viewModel.countriesList.observeAsState()
     LazyColumn(
         modifier = Modifier
@@ -50,14 +24,18 @@ fun ListPage(viewModel: CountriesViewModel, innerPadding: PaddingValues) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         item { Spacer(modifier = Modifier.height(20.dp)) }
-        items(countriesList) { country ->
-            CountryCard(
-                capital = country.capital,
-                code = country.code,
-                name = country.name,
-                region = country.region
-            )
-            Spacer(modifier = Modifier.height(6.dp))
+        if (!countriesList2.value.isNullOrEmpty()) {
+            for (country in countriesList2.value!!) {
+                item { CountryCard(
+                    capital = country.capital,
+                    code = country.code,
+                    name = country.name,
+                    region = country.region
+                ) }
+                item { Spacer(modifier = Modifier.height(6.dp)) }
+            }
+        } else {
+            item { Text("No countries found.") }
         }
     }
 }
@@ -65,5 +43,5 @@ fun ListPage(viewModel: CountriesViewModel, innerPadding: PaddingValues) {
 @Preview
 @Composable
 fun ListPagePreview() {
-    ListPage(viewModel = CountriesViewModel(), innerPadding = PaddingValues(400.dp))
+    ListPage(viewModel = CountriesViewModel())
 }
