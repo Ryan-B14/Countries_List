@@ -8,14 +8,16 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.ryanbalseiro.countrieslist.model.countries.CountriesItem
+import com.ryanbalseiro.countrieslist.CountriesViewModel
+import com.ryanbalseiro.countrieslist.data.model.countries.CountriesItem
 
 @Composable
-fun ListPage(innerPadding: PaddingValues) {
+fun ListPage(viewModel: CountriesViewModel, innerPadding: PaddingValues) {
     val countriesList = listOf(
         CountriesItem(
             name = "United States of America",
@@ -40,6 +42,7 @@ fun ListPage(innerPadding: PaddingValues) {
             demonym = null, flag = null, language = null
         ),
     )
+    val countriesList2 = viewModel.countriesList.observeAsState()
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -62,5 +65,5 @@ fun ListPage(innerPadding: PaddingValues) {
 @Preview
 @Composable
 fun ListPagePreview() {
-    ListPage(innerPadding = PaddingValues(400.dp))
+    ListPage(viewModel = CountriesViewModel(), innerPadding = PaddingValues(400.dp))
 }
