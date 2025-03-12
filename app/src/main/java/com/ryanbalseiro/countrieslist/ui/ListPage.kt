@@ -47,14 +47,6 @@ fun ListPage(innerPadding: PaddingValues) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         item { Spacer(modifier = Modifier.height(20.dp)) }
-//        for (country in items) {
-//            CountryCard(
-//                capital = country.capital,
-//                code = country.code,
-//                name = country.name,
-//                region = country.region
-//            )
-//        }
         items(countriesList) { country ->
             CountryCard(
                 capital = country.capital,
