@@ -1,4 +1,4 @@
-package com.ryanbalseiro.countrieslist.model.countries
+package com.ryanbalseiro.countrieslist.data.model.countries
 
 data class Currency(
     val code: String,
