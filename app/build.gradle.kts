@@ -52,7 +52,8 @@ dependencies {
     implementation(libs.androidx.runtime.livedata)
     implementation(libs.androidx.cardview)
 
-    implementation(libs.material) // Use the latest version available
+    implementation(libs.material)
+    implementation(libs.androidx.recyclerview) // Use the latest version available
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
