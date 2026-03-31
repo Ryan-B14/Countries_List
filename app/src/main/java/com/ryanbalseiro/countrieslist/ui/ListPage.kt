@@ -1,5 +1,6 @@
 package com.ryanbalseiro.countrieslist.ui
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -28,6 +29,7 @@ import com.ryanbalseiro.countrieslist.R
 fun ListPage(viewModel: CountriesViewModel) {
     val countriesLocalList = viewModel.countriesList.observeAsState()
     val queryState = remember { mutableStateOf("") }
+    val queryType = remember { mutableStateOf("name") } // or "capital" if you want to filter by capital
 
     Column(
         modifier = Modifier
@@ -42,7 +44,11 @@ fun ListPage(viewModel: CountriesViewModel) {
                 if (queryState.value.isEmpty() || queryState.value.isBlank()) {
                     viewModel.setCountriesListDefault()
                 } else {
-                    viewModel.filterCountriesListByName(queryState.value)
+                    if (queryType.value == "name") {
+                        viewModel.filterCountriesListByName(queryState.value)
+                    } else {
+                        viewModel.filterCountriesListByCapital(queryState.value)
+                    }
                 }
             },
             onSearch = {
@@ -52,11 +58,18 @@ fun ListPage(viewModel: CountriesViewModel) {
             onActiveChange = {},
             modifier = Modifier.fillMaxWidth(),
             enabled = true,
-            placeholder = { Text("Search by country name") },
+            placeholder = { Text("Search by country ${queryType.value}") },
             trailingIcon = {
                 Icon(
                     painter = painterResource(id = R.drawable.search_icon),
-                    contentDescription = "Search Icon"
+                    contentDescription = "Search Icon",
+                    modifier = Modifier.clickable {
+                            if (queryType.value == "name") {
+                                queryType.value = "capital"
+                            } else {
+                                queryType.value = "name"
+                            }
+                    }
                 )
             }
         ) {

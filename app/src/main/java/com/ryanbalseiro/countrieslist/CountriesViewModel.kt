@@ -46,6 +46,14 @@ class CountriesViewModel: ViewModel() {
         )
     }
 
+    fun filterCountriesListByCapital(query: String) {
+        _countriesList.postValue(
+            _masterCountriesList.value?.filter { country ->
+                country.capital.take(query.length).equals(query, ignoreCase = true)
+            }
+        )
+    }
+
     fun setCountriesListDefault() {
         _countriesList.value = masterCountriesList.value
     }
